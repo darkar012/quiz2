@@ -2,7 +2,7 @@ class tarea {
   constructor(nuevaTarea) {
     this.t = nuevaTarea;
     this.component = document.createElement("div");
-    this.id = "rr";
+    this.id = "";
   }
 
   render = () => {
@@ -52,72 +52,70 @@ class tarea {
     return this.component;
   };
 
-  position = () => {
-    let posicion = this.component.getBoundingClientRect();
-    let tipo1 = "toDo";
-    let tipo2 = "doing";
-    let tipo3 = "done";
-
-    console.log("ya"+this.id);
-
-    if (this.id === this.t.id) {
-      if (
-        (posicion.left > 350 &&
-          posicion.left < 600 &&
-          this.t.tipo === "toDo") ||
-        (posicion.left > 350 && posicion.left < 600 && this.t.tipo === "done")
-      ) {
-        let referencia = database.ref("Quiz2/doing").push();
-        let nuevaTarea = {
-          id: referencia.key,
-          tarea: this.t.tarea,
-          fecha: this.t.fecha,
-          tipo: tipo2,
-        };
-        referencia.set(nuevaTarea);
-
-        database.ref("Quiz2/toDo/" + this.t.id).remove();
-        database.ref("Quiz2/done/" + this.t.id).remove();
-      } else if (
-        (posicion.left < 350 && this.t.tipo === "doing") ||
-        (posicion.left < 350 && this.t.tipo === "done")
-      ) {
-        let referencia = database.ref("Quiz2/toDo").push();
-        let nuevaTarea = {
-          id: referencia.key,
-          tarea: this.t.tarea,
-          fecha: this.t.fecha,
-          tipo: tipo1,
-        };
-        referencia.set(nuevaTarea);
-
-        database.ref("Quiz2/done/" + this.t.id).remove();
-        database.ref("Quiz2/toDo/" + this.t.id).remove();
-      } else if (
-        (posicion.left > 500 && this.t.tipo === "doing") ||
-        (posicion.left > 500 && this.t.tipo === "toDo")
-      ) {
-        let referencia = database.ref("Quiz2/done").push();
-        let nuevaTarea = {
-          id: referencia.key,
-          tarea: this.t.tarea,
-          fecha: this.t.fecha,
-          tipo: tipo3,
-        };
-        referencia.set(nuevaTarea);
-
-        database.ref("Quiz2/doing/" + this.t.id).remove();
-        database.ref("Quiz2/toDo/" + this.t.id).remove();
-      }
-    }
-  };
-
-  getId = () => {
-    let gg = this.t.id;
-    return gg;
-  };
-
   setId = (f) => {
     this.id = f;
   };
+
+  position = () => {
+    let posicion = document.getElementById(this.id).getBoundingClientRect();
+    let tipo1 = "toDo";
+    let tipo2 = "doing";
+    let tipo3 = "done";
+    
+console.log(posicion.left);
+
+    if (
+      (posicion.left > 350 && posicion.left < 600 && this.t.tipo === "toDo") ||
+      (posicion.left > 350 && posicion.left < 600 && this.t.tipo === "done")
+    ) {
+      let referencia = database.ref("Quiz2/doing/" + this.t.id);
+      let nuevaTarea = {
+        id: referencia.key,
+        tarea: this.t.tarea,
+        fecha: this.t.fecha,
+        tipo: tipo2,
+      };
+      referencia.set(nuevaTarea);
+
+      database.ref("Quiz2/toDo/" + this.id).remove();
+      database.ref("Quiz2/done/" + this.id).remove();
+    } else if (
+      (posicion.left < 350 && this.t.tipo === "doing") ||
+      (posicion.left < 350 && this.t.tipo === "done")
+    ) {
+      let referencia = database.ref("Quiz2/toDo").push();
+      let nuevaTarea = {
+        id: referencia.key,
+        tarea: this.t.tarea,
+        fecha: this.t.fecha,
+        tipo: tipo1,
+      };
+      referencia.set(nuevaTarea);
+
+      database.ref("Quiz2/done/" + this.t.id).remove();
+      database.ref("Quiz2/toDo/" + this.t.id).remove();
+    } else if (
+      (posicion.left > 500 && this.t.tipo === "doing") ||
+      (posicion.left > 500 && this.t.tipo === "toDo")
+    ) {
+      let referencia = database.ref("Quiz2/done").push();
+      let nuevaTarea = {
+        id: referencia.key,
+        tarea: this.t.tarea,
+        fecha: this.t.fecha,
+        tipo: tipo3,
+      };
+      referencia.set(nuevaTarea);
+
+      database.ref("Quiz2/doing/" + this.t.id).remove();
+      database.ref("Quiz2/toDo/" + this.t.id).remove();
+    }
+  };
 }
+
+getId = () => {
+  let gg = this.t.id;
+  return gg;
+};
+
+

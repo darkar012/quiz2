@@ -6,8 +6,13 @@ const tareasDoing = document.getElementById("doingContent");
 const tareasDone = document.getElementById("doneContent");
 const body = document.getElementsByClassName("colTarea");
 
-let col;
+
 let valor;
+let counter = 0;
+let arraytd = [];
+let arrayd = [];
+let arraytdo = [];
+
 
 let chosen = false;
 
@@ -45,40 +50,65 @@ const register = () => {
 
 newBtn.addEventListener("click", register);
 
-let counter = 0;
-
+let col;
 database.ref("Quiz2/toDo").on("value", function (data) {
+  counter = 0;
+  arrayt = [];
   tareas.innerHTML = "";
   data.forEach((nuevaTarea) => {
     valor = nuevaTarea.val();
     col = new tarea(valor);
     tareas.appendChild(col.render());
-    
-    for (let i = 0; i < body.length; i++) {
-      let variable = body[i].id === valor.id;
-      if (variable == false) {
-
-      }
-    }
+    arrayt.push(valor.id);
   });
+  for (let i = 0; i < body.length; i++) {
+    body[0 + counter].id = arrayt[0 + counter];
+    counter++;
+    body[i].addEventListener("dragend", () => {
+      col.setId(arrayt[i]);
+      col.position();
+    });
+  }
 });
 
 database.ref("Quiz2/doing").on("value", function (data) {
+  counter = 0;
+  arrayd = [];
   tareasDoing.innerHTML = "";
   data.forEach((nuevaTarea) => {
     let valor = nuevaTarea.val();
     col = new tarea(valor);
     tareasDoing.appendChild(col.render());
+    arrayd.push(valor.id);
   });
+  for (let i = 0; i < body.length; i++) {
+    body[0 + counter].id = arrayd[0 + counter];
+    counter++;
+    body[i].addEventListener("dragend", () => {
+      col.setId(arrayd[i]);
+      col.position();
+    });
+  }
 });
 
 database.ref("Quiz2/done").on("value", function (data) {
+  counter = 0;
+  arraydo = [];
   tareasDone.innerHTML = "";
   data.forEach((nuevaTarea) => {
     let valor = nuevaTarea.val();
     col = new tarea(valor);
     tareasDone.appendChild(col.render());
+    arraydo.push(valor.id);
   });
+  for (let i = 0; i < body.length; i++) {
+    body[0 + counter].id = arraydo[0 + counter];
+    counter++;
+    body[i].addEventListener("dragend", () => {
+      col.setId(arraydo[i]);
+      col.position();
+    });
+  }
 });
 
 Sortable.create(tareas, {
