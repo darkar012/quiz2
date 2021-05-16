@@ -69,9 +69,9 @@ erasebtn.addEventListener("click", ()=>{
     let tipo2 = "doing";
     let tipo3 = "done";
 
-    //console.log(posicion.left);
+    console.log(posicion.left);
 
-    if (posicion.left > 350 && posicion.left < 600) {
+    if (posicion.left > 500 && posicion.left < 900) {
       let referencia = database.ref("Quiz2/doing/" + this.id);
       let nuevaTarea = {
         id: referencia.key,
@@ -96,7 +96,7 @@ erasebtn.addEventListener("click", ()=>{
       database.ref("Quiz2/done/" + this.id).remove();
       database.ref("Quiz2/doing/" + this.id).remove();
 
-    } else if (posicion.left > 600) {
+    } else if (posicion.left > 900) {
       let referencia = database.ref("Quiz2/done/" + this.id);
       let nuevaTarea = {
         id: referencia.key,
