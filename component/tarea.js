@@ -3,17 +3,31 @@ class tarea {
     this.t = nuevaTarea;
     this.component = document.createElement("div");
     this.id = "";
+    this.fecha = "";
+    this.content = "";
   }
 
   render = () => {
     /* let x;
     let y;*/
 
-    this.component.className = "colTarea";
+    if (this.t.tipo === "toDo") {
+      this.component.className = "colTarea";
+    } else if (this.t.tipo === "doing") {
+      this.component.className = "colTareaD";
+    } else {
+      this.component.className = "colTareaDo";
+    }
+let divbtn = document.createElement("div");
+divbtn.className = "divbtn";
+
+    let erasebtn = document.createElement("button");
+    erasebtn.className = "erase";
+    erasebtn.innerHTML = '<i class="far fa-minus-square fa-lg"></i>';
 
     let imageDrag = document.createElement("div");
     imageDrag.className = "imageDrag";
-    imageDrag.innerHTML = '<i class="fas fa-grip-lines"></i>';
+    imageDrag.innerHTML = '<i class="fas fa-grip-lines fa-lg"></i>';
 
     let col = document.createElement("div");
     col.className = "col";
@@ -30,30 +44,23 @@ class tarea {
     col.appendChild(fechaCont);
     col.appendChild(tareaCont);
     this.component.appendChild(col);
+    divbtn.appendChild(erasebtn);
+    this.component.appendChild(divbtn);
 
-    /*const body = document.getElementById("body");
-
-    body.addEventListener("drag", (e) => {
-      x = e.offsetX;
-      y = e.offsetY;
-    });
-
-    body.addEventListener("mouseup", (e) => {
-      x = e.offsetX;
-      y = e.offsetY;
-      console.log(x + ", " + y);
-    });
-
-    body.addEventListener("dragend", (e) => {
-      console.log(x + ",(dragged) " + y);
-    });
-*/
+erasebtn.addEventListener("click", ()=>{
+  database.ref("Quiz2/toDo/" + this.t.id).remove();
+  database.ref("Quiz2/doing/" + this.t.id).remove();
+  database.ref("Quiz2/done/" + this.t.id).remove();
+});
 
     return this.component;
   };
 
   setId = (f) => {
-    this.id = f;
+    let r = f.split(",");
+    this.id = r[0];
+    this.fecha = r[1];
+    this.content = r[2];
   };
 
   position = () => {
@@ -61,54 +68,46 @@ class tarea {
     let tipo1 = "toDo";
     let tipo2 = "doing";
     let tipo3 = "done";
-    
-console.log(posicion.left);
 
-    if (
-      (posicion.left > 350 && posicion.left < 600 && this.t.tipo === "toDo") ||
-      (posicion.left > 350 && posicion.left < 600 && this.t.tipo === "done")
-    ) {
-      let referencia = database.ref("Quiz2/doing/" + this.t.id);
+    //console.log(posicion.left);
+
+    if (posicion.left > 350 && posicion.left < 600) {
+      let referencia = database.ref("Quiz2/doing/" + this.id);
       let nuevaTarea = {
         id: referencia.key,
-        tarea: this.t.tarea,
-        fecha: this.t.fecha,
+        tarea: this.content,
+        fecha: this.fecha,
         tipo: tipo2,
       };
       referencia.set(nuevaTarea);
 
       database.ref("Quiz2/toDo/" + this.id).remove();
       database.ref("Quiz2/done/" + this.id).remove();
-    } else if (
-      (posicion.left < 350 && this.t.tipo === "doing") ||
-      (posicion.left < 350 && this.t.tipo === "done")
-    ) {
-      let referencia = database.ref("Quiz2/toDo").push();
+    } else if (posicion.left < 350) {
+      let referencia = database.ref("Quiz2/toDo/" + this.id);
       let nuevaTarea = {
         id: referencia.key,
-        tarea: this.t.tarea,
-        fecha: this.t.fecha,
+        tarea: this.content,
+        fecha: this.fecha,
         tipo: tipo1,
       };
       referencia.set(nuevaTarea);
 
-      database.ref("Quiz2/done/" + this.t.id).remove();
-      database.ref("Quiz2/toDo/" + this.t.id).remove();
-    } else if (
-      (posicion.left > 500 && this.t.tipo === "doing") ||
-      (posicion.left > 500 && this.t.tipo === "toDo")
-    ) {
-      let referencia = database.ref("Quiz2/done").push();
+      database.ref("Quiz2/done/" + this.id).remove();
+      database.ref("Quiz2/doing/" + this.id).remove();
+
+    } else if (posicion.left > 600) {
+      let referencia = database.ref("Quiz2/done/" + this.id);
       let nuevaTarea = {
         id: referencia.key,
-        tarea: this.t.tarea,
-        fecha: this.t.fecha,
+        tarea: this.content,
+        fecha: this.fecha,
         tipo: tipo3,
       };
       referencia.set(nuevaTarea);
 
-      database.ref("Quiz2/doing/" + this.t.id).remove();
-      database.ref("Quiz2/toDo/" + this.t.id).remove();
+      database.ref("Quiz2/doing/" + this.id).remove();
+      database.ref("Quiz2/toDo/" + this.id).remove();
     }
   };
 }
@@ -117,5 +116,3 @@ getId = () => {
   let gg = this.t.id;
   return gg;
 };
-
-

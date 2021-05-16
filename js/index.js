@@ -4,14 +4,16 @@ const newTarea = document.getElementById("descripcionTarea");
 const tareas = document.getElementById("toDoContent");
 const tareasDoing = document.getElementById("doingContent");
 const tareasDone = document.getElementById("doneContent");
-const body = document.getElementsByClassName("colTarea");
+const toDo = document.getElementsByClassName("colTarea");
+const doing = document.getElementsByClassName("colTareaD");
+const done = document.getElementsByClassName("colTareaDo");
 
 
 let valor;
 let counter = 0;
-let arraytd = [];
+let arrayt = [];
 let arrayd = [];
-let arraytdo = [];
+let arraydo = [];
 
 
 let chosen = false;
@@ -59,12 +61,14 @@ database.ref("Quiz2/toDo").on("value", function (data) {
     valor = nuevaTarea.val();
     col = new tarea(valor);
     tareas.appendChild(col.render());
-    arrayt.push(valor.id);
+    arrayt.push(valor.id+", "+valor.fecha+", "+ valor.tarea);
   });
-  for (let i = 0; i < body.length; i++) {
-    body[0 + counter].id = arrayt[0 + counter];
+  for (let i = 0; i < toDo.length; i++) {
+    let r = arrayt[0 + counter];
+    let f = r.split(",");
+    toDo[0 + counter].id = f[0];
     counter++;
-    body[i].addEventListener("dragend", () => {
+    toDo[i].addEventListener("dragend", () => {
       col.setId(arrayt[i]);
       col.position();
     });
@@ -79,12 +83,14 @@ database.ref("Quiz2/doing").on("value", function (data) {
     let valor = nuevaTarea.val();
     col = new tarea(valor);
     tareasDoing.appendChild(col.render());
-    arrayd.push(valor.id);
+    arrayd.push(valor.id+", "+valor.fecha+", "+ valor.tarea);
   });
-  for (let i = 0; i < body.length; i++) {
-    body[0 + counter].id = arrayd[0 + counter];
+  for (let i = 0; i < doing.length; i++) {
+    let r = arrayd[0 + counter];
+    let f = r.split(",");
+    doing[0 + counter].id = f[0];
     counter++;
-    body[i].addEventListener("dragend", () => {
+    doing[i].addEventListener("dragend", () => {
       col.setId(arrayd[i]);
       col.position();
     });
@@ -99,12 +105,14 @@ database.ref("Quiz2/done").on("value", function (data) {
     let valor = nuevaTarea.val();
     col = new tarea(valor);
     tareasDone.appendChild(col.render());
-    arraydo.push(valor.id);
+    arraydo.push(valor.id+", "+valor.fecha+", "+ valor.tarea);
   });
-  for (let i = 0; i < body.length; i++) {
-    body[0 + counter].id = arraydo[0 + counter];
+  for (let i = 0; i < done.length; i++) {
+    let r = arraydo[0 + counter];
+    let f = r.split(",");
+    done[0 + counter].id = f[0];
     counter++;
-    body[i].addEventListener("dragend", () => {
+    done[i].addEventListener("dragend", () => {
       col.setId(arraydo[i]);
       col.position();
     });

@@ -103,7 +103,7 @@ body {
   flex-direction: column;
 }
 
-.colTarea{
+.colTarea, .colTareaD, .colTareaDo{
   display: flex;
   flex-direction: row;
   padding: 10px;
@@ -113,10 +113,6 @@ body {
   box-shadow: 5px 5px 10px 1px rgba(151, 151, 151, 0.4);
   margin-bottom: 20px;
   align-items: center;
-}
-
-.col{
-  margin-left: 15px;
 }
 
 .fechaCont{
@@ -133,4 +129,20 @@ body {
 
 .fas {
   cursor: move;
+}
+
+.erase {
+  border: none;
+  margin: 0%;
+  padding: 0cm;
+}
+
+.divbtn {
+  display: flex;
+  flex-direction: row;
+  width: 20%;
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
