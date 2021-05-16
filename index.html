@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Global Solution SAS</title>
+    
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body id="body">
+    <h1>Global Solution SAS</h1>
+    <div id="descriptionContainer">
+      <textarea
+        id="descripcionTarea"
+        placeholder="Descripción de la tarea"
+        cols="50"
+        rows="2"
+        required
+      ></textarea>
+      <button id="nuevaTarea">Nueva Tarea</button>
+    </div>
+    <div id="listas">
+      <div id="toDo">
+        <div id="titleToDo">
+          <h1>To Do</h1>
+        </div>
+        <div id="toDoContent"></div>
+      </div>
+      <div id="doing">
+        <div id="titleDoing">
+          <h1>Doing</h1>
+        </div>
+        <div id="doingContent">
+          
+        </div>
+      </div>
+      <div id="done">
+        <div id="titleDone">
+          <h1>Done</h1>
+        </div>
+        <div id="doneContent"></div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script
+  src="https://kit.fontawesome.com/12af9cfd04.js"
+  crossorigin="anonymous"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyCmIzTSXQN5pwzffN8b0rZaKfqPCNRl9p8",
+    authDomain: "quiz1-31dc9.firebaseapp.com",
+    projectId: "quiz1-31dc9",
+    storageBucket: "quiz1-31dc9.appspot.com",
+    messagingSenderId: "77929035784",
+    appId: "1:77929035784:web:4c776567410169643df9bd",
+    measurementId: "G-M1K5GMKD9P"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script src="js/index.js"></script>
+<script src="./component/tarea.js"></script>
